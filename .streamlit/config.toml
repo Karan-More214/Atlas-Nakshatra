@@ -1,0 +1,9 @@
+[theme]
+base = "dark"
+# Saffron/gold - a nod to "Nakshatra" (star) and to India
+primaryColor = "#FF9F1C"
+# Deep navy, not pure black - reads as "night sky" without crushing contrast
+backgroundColor = "#0B1229"
+secondaryBackgroundColor = "#141B36"
+textColor = "#F5F3EE"
+font = "sans serif"

@@ -92,7 +92,7 @@ streamlit run app/streamlit_app.py
 ```
 Optional: put an `HF_TOKEN` in `.env` (copy `.env.example`) to raise the Hugging Face rate limit.
 
-**On Streamlit Community Cloud:** deploy straight from this repo (`app/streamlit_app.py` as the main file) — see [share.streamlit.io](https://share.streamlit.io). `runtime.txt` pins the Python version and `requirements.txt` the libraries the pickled model needs. Add `HF_TOKEN` under the app's *Advanced settings → Secrets* if you want the higher rate limit; it's optional.
+**On Streamlit Community Cloud:** deploy straight from this repo (`app/streamlit_app.py` as the main file) — see [share.streamlit.io](https://share.streamlit.io). `runtime.txt` pins the Python version and `requirements.txt` the libraries the pickled model needs. On Streamlit Cloud, choose Python 3.13 under Advanced settings — it must match the version `models/atlas_nakshatra.joblib` was trained with, or the model may fail to unpickle. Add `HF_TOKEN` under the app's *Advanced settings → Secrets* if you want the higher rate limit; it's optional.
 
 ## ▶️ How to run
 ```bash

@@ -20,6 +20,8 @@ Trained on 7,440 eligible Hugging Face models tagged with an Indian language, af
 - At the chosen threshold (0.36): precision 0.70, recall 0.20 (F1 0.31) — it flags a smaller, higher-confidence set of models rather than most future adoptees.
 - **Top 10 drivers** (by mean |SHAP|, direction where it's a single higher/lower relationship): builder type (see categories), model card wording/topics, number of language tags (higher → more adoption), model size in parameters (mixed), number of files (mixed), task (see categories), library (see categories), links in the card (higher → more adoption), model card length (higher → more adoption), language (see categories).
 - **Robustness check:** retraining at a stricter threshold (≥100 downloads/30d instead of ≥50) gives the same top 5 drivers in the same order, so this isn't an artifact of one specific threshold.
+- **Caveat on "builder type":** it's hand-mapped for 215 authors (see [Limitations](#-limitations)), so as a driver it partly measures reputation/visibility (is this a known org?) rather than something a brand-new builder can act on.
+- Documentation alone predicts little: the docs-checklist baseline reaches only **ROC-AUC 0.61** on the test set, far below the full model's 0.74.
 
 These are launch-time associations the model found useful for prediction, not proven causes — see [Doing it honestly](#-doing-it-honestly). Adding a link or writing a longer card does not, by itself, guarantee more downloads.
 

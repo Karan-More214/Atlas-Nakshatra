@@ -13,17 +13,22 @@ Usage:
 """
 import argparse
 import json
+import sys
 import time
 from datetime import date
 
 import pandas as pd
+
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 from config import CONFIG_DIR, HF_TOKEN, RAW_DIR
 
 EXPAND = [
     "author", "createdAt", "lastModified", "downloads", "downloadsAllTime", "likes",
     "pipeline_tag", "library_name", "tags", "gated", "cardData", "safetensors",
-    "siblings", "usedStorage", "model-index", "baseModels",
+    "siblings", "model-index", "baseModels",
 ]
 
 
@@ -67,16 +72,24 @@ def model_row(m, lang_code, hf_code):
 
 
 def fetch_language(api, lang_code, hf_code, limit=None, retries=3):
+    # A single model with malformed card metadata can make the Hub API raise mid-listing
+    # (e.g. an invalid model-index breaks huggingface_hub's own parsing). Retrying from
+    # scratch hits the same record again, so keep whatever was fetched before the failure
+    # instead of throwing an entire language's models away.
+    best = []
     for attempt in range(1, retries + 1):
+        rows = []
         try:
-            return [model_row(m, lang_code, hf_code)
-                    for m in api.list_models(filter=hf_code, expand=EXPAND, limit=limit)]
-        except Exception as err:  # network hiccup / rate limit
+            for m in api.list_models(filter=hf_code, expand=EXPAND, limit=limit):
+                rows.append(model_row(m, lang_code, hf_code))
+            return rows
+        except Exception as err:  # network hiccup / rate limit / bad record from the Hub
             wait = 15 * attempt
-            print(f"   ! {hf_code}: {err.__class__.__name__}: {err} - retrying in {wait}s")
+            print(f"   ! {hf_code}: {err.__class__.__name__} after {len(rows)} models - retrying in {wait}s")
+            best = max(best, rows, key=len)
             time.sleep(wait)
-    print(f"   x {hf_code}: failed after {retries} attempts, skipped")
-    return []
+    print(f"   x {hf_code}: failed after {retries} attempts, kept {len(best)} models fetched before the failure")
+    return best
 
 
 def main():

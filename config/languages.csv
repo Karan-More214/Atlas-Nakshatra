@@ -1,0 +1,23 @@
+lang_code,lang_name,script,speakers_millions,hf_codes
+hi,Hindi,Devanagari,528.35,hi
+bn,Bengali,Bengali,97.24,bn
+mr,Marathi,Devanagari,83.03,mr
+te,Telugu,Telugu,81.13,te
+ta,Tamil,Tamil,69.03,ta
+gu,Gujarati,Gujarati,55.49,gu
+ur,Urdu,Perso-Arabic,50.77,ur
+kn,Kannada,Kannada,43.71,kn
+or,Odia,Odia,37.52,or|ory
+ml,Malayalam,Malayalam,34.84,ml
+pa,Punjabi,Gurmukhi,33.12,pa
+as,Assamese,Bengali-Assamese,15.31,as
+mai,Maithili,Devanagari,13.58,mai
+sat,Santali,Ol Chiki,7.37,sat
+ks,Kashmiri,Perso-Arabic,6.80,ks
+ne,Nepali,Devanagari,2.93,ne|npi
+sd,Sindhi,Perso-Arabic,2.77,sd
+doi,Dogri,Devanagari,2.60,doi
+kok,Konkani,Devanagari,2.26,kok|gom
+mni,Manipuri,Meitei/Bengali,1.76,mni
+brx,Bodo,Devanagari,1.48,brx
+sa,Sanskrit,Devanagari,0.02,sa

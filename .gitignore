@@ -1,0 +1,14 @@
+.env
+.claude/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+mlruns/
+
+# data and trained models stay local (can be large)
+data/raw/
+data/processed/
+data/demo/
+models/
+reports/demo/

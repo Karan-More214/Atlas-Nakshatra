@@ -6,9 +6,12 @@ __pycache__/
 .pytest_cache/
 mlruns/
 
-# data and trained models stay local (can be large)
+# data and trained models stay local (can be large) - except the one model
+# committed for Streamlit Cloud deployment, which doesn't fetch its own data
 data/raw/
 data/processed/
 data/demo/
-models/
+models/*
+!models/atlas_nakshatra.joblib
 reports/demo/
+.streamlit/secrets.toml

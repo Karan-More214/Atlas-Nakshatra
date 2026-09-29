@@ -1,5 +1,7 @@
 # ✨ Atlas-Nakshatra: Predicting Which Indian-Language AI Models Become Stars
 
+🌐 **Live app:** https://atlas-nakshatra.streamlit.app
+
 > **Thousands of AI models are published for India's languages, but most go unused. Can we predict at launch which ones will be adopted, and tell builders what to change?**
 
 *Nakshatra* (नक्षत्र) means "star". This is the data science sequel to my analytics project **[Bharat AI Atlas](https://github.com/Karan-More214/Bharat-AI-Atlas)**, which found that downloads of Indian-language AI are extremely concentrated: 41 models get 80% of all downloads and 11.8% are never downloaded. Bharat AI Atlas *described* that inequality. Atlas-Nakshatra *predicts and explains* it.
@@ -77,19 +79,27 @@ explain.py            SHAP importance, adoption by group, findings draft     →
 predict.py + app/     Launch Checker: probability, drivers, suggested fixes
 ```
 
-## 🖥️ Launch Checker app
-```bash
-streamlit run app/streamlit_app.py
-```
+## 🖥️ Run the app (Launch Checker)
 - **Check a published model:** paste a Hugging Face model ID and get its adoption probability, the top SHAP drivers, and the changes that would raise it most.
 - **Plan a new model:** describe a model before publishing it (language, task, license, base model, card sections) and see its predicted adoption.
+
+The app only needs `models/atlas_nakshatra.joblib` (committed to this repo) and `config/`; it does not need `data/raw` or `data/processed` to run, and works with no Hugging Face token at all (a token just raises the rate limit for the "Check a published model" tab).
+
+**Locally:**
+```bash
+pip install -r requirements.txt        # or requirements-dev.txt to also get pytest
+streamlit run app/streamlit_app.py
+```
+Optional: put an `HF_TOKEN` in `.env` (copy `.env.example`) to raise the Hugging Face rate limit.
+
+**On Streamlit Community Cloud:** deploy straight from this repo (`app/streamlit_app.py` as the main file) — see [share.streamlit.io](https://share.streamlit.io). `runtime.txt` pins the Python version and `requirements.txt` the libraries the pickled model needs. Add `HF_TOKEN` under the app's *Advanced settings → Secrets* if you want the higher rate limit; it's optional.
 
 ## ▶️ How to run
 ```bash
 git clone https://github.com/Karan-More214/Atlas-Nakshatra.git
 cd Atlas-Nakshatra
 python -m venv venv && venv\Scripts\activate          # Mac/Linux: source venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt                    # requirements.txt + pytest
 copy .env.example .env                                 # Mac/Linux: cp; add your HF token
 
 python src/run_pipeline.py --limit 200                 # quick test on a small sample

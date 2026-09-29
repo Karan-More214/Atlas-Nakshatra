@@ -31,7 +31,18 @@ FIGURES_DIR = REPORTS_DIR / "figures"
 for folder in (RAW_DIR, CARDS_DIR, PROCESSED_DIR, MODELS_DIR, REPORTS_DIR, FIGURES_DIR):
     folder.mkdir(parents=True, exist_ok=True)
 
-HF_TOKEN = os.getenv("HF_TOKEN") or None
+def _hf_token():
+    # st.secrets is how Streamlit Community Cloud passes tokens (Advanced settings -> Secrets).
+    # Reading it outside a deployed app (no .streamlit/secrets.toml) raises, so fall back to
+    # the environment variable / .env - the app must work with no token at all either way.
+    try:
+        import streamlit as st
+        return st.secrets["HF_TOKEN"]
+    except Exception:
+        return os.getenv("HF_TOKEN") or None
+
+
+HF_TOKEN = _hf_token()
 
 # ---------------------------------------------------------------------------
 # Target: is a model "adopted"?

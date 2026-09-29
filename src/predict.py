@@ -149,13 +149,30 @@ def _author_map():
     return pd.read_csv(C.CONFIG_DIR / "author_mapping.csv")
 
 
-def _author_prior_models(author, created_at):
+@lru_cache(maxsize=1)
+def _author_model_counts() -> pd.DataFrame:
+    """(author, created_at) for every model in the training snapshot, one row per model.
+    Prefers the full raw snapshot (data/raw) when present; falls back to the small lookup
+    checked into config/ so this works without the (git-ignored, multi-hundred-MB) raw data,
+    e.g. on Streamlit Cloud."""
     files = sorted(C.RAW_DIR.glob("models_raw_*.parquet"))
-    if not files:
+    if files:
+        raw = pd.read_parquet(files[-1], columns=["model_id", "author", "created_at"]).drop_duplicates("model_id")
+        raw["created_at"] = pd.to_datetime(raw["created_at"], utc=True)
+        return raw[["author", "created_at"]]
+    path = C.CONFIG_DIR / "author_model_counts.csv"
+    if not path.exists():
+        return pd.DataFrame(columns=["author", "created_at"])
+    counts = pd.read_csv(path)
+    counts["created_at"] = pd.to_datetime(counts["created_at"], utc=True)
+    return counts
+
+
+def _author_prior_models(author, created_at):
+    df = _author_model_counts()
+    if df.empty:
         return 0
-    raw = pd.read_parquet(files[-1], columns=["model_id", "author", "created_at"]).drop_duplicates("model_id")
-    raw["created_at"] = pd.to_datetime(raw["created_at"], utc=True)
-    return int(((raw["author"] == author) & (raw["created_at"] < created_at)).sum())
+    return int(((df["author"] == author) & (df["created_at"] < created_at)).sum())
 
 
 def features_from_raw(raw_row: dict) -> pd.DataFrame:
@@ -238,7 +255,11 @@ def main():
         row = fetch_live(args.model_id)
         print_report(args.model_id, *explain_one(bundle, row), bundle)
     if args.from_test:
-        data = pd.read_parquet(C.PROCESSED_DIR / "dataset.parquet")
+        path = C.PROCESSED_DIR / "dataset.parquet"
+        if not path.exists():
+            raise SystemExit(f"--from-test needs {path}, which isn't built here. "
+                             "Run src/build_dataset.py first, or use --model-id instead.")
+        data = pd.read_parquet(path)
         sample = data[data["split"] == "test"].sample(args.from_test, random_state=1)
         for _, r in sample.iterrows():
             p, drv, sug = explain_one(bundle, r.to_frame().T.infer_objects())

@@ -39,9 +39,15 @@ HF_TOKEN = os.getenv("HF_TOKEN") or None
 # ADOPTION_MIN_DOWNLOADS_30D downloads in the 30 days before the snapshot.
 # Only models old enough to have had a fair chance are used for training.
 # ---------------------------------------------------------------------------
-ADOPTION_MIN_DOWNLOADS_30D = int(os.getenv("ADOPTION_MIN_DOWNLOADS_30D", "10"))
+ADOPTION_MIN_DOWNLOADS_30D = int(os.getenv("ADOPTION_MIN_DOWNLOADS_30D", "50"))
 MIN_AGE_DAYS = 90      # younger models have not had time to be discovered
 MAX_AGE_DAYS = 1095    # older models: popularity reflects a different era of the Hub
+
+# Quantized/GGUF re-uploads and dedicated repackaging accounts (e.g. mradermacher) get
+# downloaded by automated tools (llama.cpp, LM Studio, Ollama...) far more often than
+# original models at every download threshold, which inflates the adoption rate and
+# swamps genuine "did a builder's own model get used" signal. Excluded by default.
+EXCLUDE_REPACKAGED = os.getenv("EXCLUDE_REPACKAGED", "1") == "1"
 
 # Chronological split (by created date): oldest -> train, middle -> validation, newest -> test
 TRAIN_FRAC, VALID_FRAC = 0.70, 0.15

@@ -3,7 +3,8 @@ STEP 3 - BUILD THE MODELLING DATASET
 Raw snapshot + model cards -> one row per model with features, target and split.
 
     target  is_adopted = downloads in last 30 days >= ADOPTION_MIN_DOWNLOADS_30D
-    rows    models with a real created date, aged MIN_AGE_DAYS..MAX_AGE_DAYS at the snapshot
+    rows    models with a real created date, aged MIN_AGE_DAYS..MAX_AGE_DAYS at the snapshot,
+            excluding quantized/GGUF/repackaged models if EXCLUDE_REPACKAGED (default on)
     split   chronological by created date (train = oldest, test = newest)
 
 Output: data/processed/dataset.parquet
@@ -94,6 +95,15 @@ def main():
                  "downloads_all_time", "likes", "is_adopted"]
     data = models[meta_cols].merge(feats, on="model_id")
 
+    if C.EXCLUDE_REPACKAGED:
+        # quantized/GGUF re-uploads and repackaging accounts get downloaded by automated
+        # tools far more than original models, which swamps genuine adoption signal
+        repackaged = ((data["base_relation"] == "quantized") | (data["has_gguf"] == 1)
+                      | (data["org_type"] == "Model Repackager"))
+        print(f"Excluding {repackaged.sum():,} repackaged models (quantized/GGUF/Model Repackager) "
+              f"of {len(data):,} eligible (EXCLUDE_REPACKAGED=1)")
+        data = data[~repackaged].copy()
+
     # chronological split: no model in validation/test was created before a training model
     data = data.sort_values("created_at").reset_index(drop=True)
     n = len(data)
@@ -106,7 +116,8 @@ def main():
     out = C.PROCESSED_DIR / "dataset.parquet"
     data.to_parquet(out, index=False)
 
-    print(f"\nEligible models: {n:,} (aged {C.MIN_AGE_DAYS}-{C.MAX_AGE_DAYS} days, real created date)")
+    repack_note = " after excluding repackaged models" if C.EXCLUDE_REPACKAGED else ""
+    print(f"\nEligible models: {n:,}{repack_note} (aged {C.MIN_AGE_DAYS}-{C.MAX_AGE_DAYS} days, real created date)")
     print(f"Target: >= {C.ADOPTION_MIN_DOWNLOADS_30D} downloads in last 30 days\n")
     summary = data.groupby("split").agg(
         models=("model_id", "count"),

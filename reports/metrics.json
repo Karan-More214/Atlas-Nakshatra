@@ -41,28 +41,28 @@
     "log_author_prior_models",
     "card_text"
   ],
-  "threshold": 0.45461961309833165,
+  "threshold": 0.3600273617579415,
   "lgbm_params": {
-    "num_leaves": 15,
-    "min_child_samples": 50
+    "num_leaves": 31,
+    "min_child_samples": 30
   },
-  "target": "downloads_30d >= 10",
+  "target": "downloads_30d >= 50",
   "test_metrics": {
-    "pr_auc": 0.8733026739690628,
-    "roc_auc": 0.8044582696626909,
-    "brier": 0.17581187261264797,
-    "precision_top10pct": 0.9779005524861878,
-    "lift_top10pct": 1.5816932423664496,
-    "base_rate": 0.6182618261826183,
-    "threshold": 0.45461961309833165,
-    "precision": 0.7476780185758514,
-    "recall": 0.8594306049822064,
-    "f1": 0.7996688741721855
+    "pr_auc": 0.43440876766253345,
+    "roc_auc": 0.736242746615087,
+    "brier": 0.11493315054384481,
+    "precision_top10pct": 0.4594594594594595,
+    "lift_top10pct": 2.913390663390664,
+    "base_rate": 0.15770609318996415,
+    "threshold": 0.3600273617579415,
+    "precision": 0.7,
+    "recall": 0.19886363636363635,
+    "f1": 0.30973451327433627
   },
-  "trained_at": "2026-09-29T15:57:51.396063+00:00",
+  "trained_at": "2026-09-29T16:07:04.337432+00:00",
   "train_period": [
     "2023-10-01",
-    "2026-01-10"
+    "2026-02-17"
   ],
   "demo": false
 }

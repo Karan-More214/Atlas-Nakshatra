@@ -1,0 +1,76 @@
+group,value,models,adoption_rate
+task_group,Embeddings & Search,487,0.9260780287474333
+task_group,Vision & Multimodal,550,0.7709090909090909
+task_group,Text Generation (LLMs),4278,0.7639083683964469
+task_group,Classification & NER,640,0.73125
+task_group,Language Understanding (Fill-Mask),71,0.7183098591549296
+task_group,Unspecified,2764,0.6841534008683068
+task_group,Translation,726,0.6804407713498623
+task_group,Text-to-Speech,628,0.6162420382165605
+task_group,Other,187,0.5668449197860963
+task_group,Question Answering,99,0.5555555555555556
+task_group,Audio Classification,44,0.5
+task_group,Speech Recognition,1623,0.447935921133703
+primary_lang,multi,3528,0.7888321995464853
+primary_lang,pa,150,0.7133333333333334
+primary_lang,ta,655,0.7022900763358778
+primary_lang,hi,5535,0.6822041553748871
+primary_lang,gu,77,0.6363636363636364
+primary_lang,bn,650,0.6138461538461538
+primary_lang,te,341,0.6099706744868035
+primary_lang,or,70,0.5571428571428572
+primary_lang,ur,328,0.524390243902439
+primary_lang,mr,185,0.4972972972972973
+primary_lang,sa,103,0.49514563106796117
+primary_lang,kn,82,0.4878048780487805
+primary_lang,ml,186,0.45698924731182794
+primary_lang,sd,41,0.43902439024390244
+primary_lang,as,89,0.20224719101123595
+org_type,Global Research & Open Community,289,0.9896193771626297
+org_type,Model Repackager,1901,0.9842188321935823
+org_type,Global AI Company,294,0.9625850340136054
+org_type,Indian Startup & Company,38,0.9210526315789473
+org_type,Global Big Tech,111,0.9009009009009009
+org_type,Indian Research & Academia,133,0.8947368421052632
+org_type,Individual,299,0.7859531772575251
+org_type,Unclassified,9038,0.599579552998451
+license_group,Non-commercial,687,0.8384279475982532
+license_group,Other,698,0.7979942693409742
+license_group,Model-specific (Llama/Gemma/RAIL),3144,0.7531806615776081
+license_group,Permissive,6722,0.6434096994941981
+license_group,Not specified,705,0.6156028368794326
+license_group,Copyleft / Share-alike,160,0.60625
+base_author,prithivMLmods,40,1.0
+base_author,tiiuae,41,1.0
+base_author,mesolitica,51,0.9803921568627451
+base_author,aisingapore,125,0.976
+base_author,thelamapi,59,0.9661016949152542
+base_author,OpenMed,60,0.95
+base_author,utter-project,70,0.9428571428571428
+base_author,PocketDoc,35,0.9428571428571428
+base_author,arcee-ai,106,0.9339622641509434
+base_author,huihui-ai,39,0.9230769230769231
+base_author,yanolja,45,0.9111111111111111
+base_author,CohereLabs,205,0.9024390243902439
+base_author,bigscience,70,0.9
+base_author,tencent,96,0.8854166666666666
+base_author,intfloat,77,0.8831168831168831
+base_author,sentence-transformers,35,0.8285714285714286
+base_author,mistralai,399,0.8120300751879699
+base_author,ai4bharat,66,0.803030303030303
+base_author,mlx-community,58,0.7758620689655172
+base_author,sarvamai,79,0.7721518987341772
+base_author,distilbert,35,0.7714285714285715
+base_author,canopylabs,42,0.7619047619047619
+base_author,meta-llama,1756,0.7312072892938497
+base_author,Qwen,476,0.7289915966386554
+base_author,nvidia,75,0.72
+base_author,FacebookAI,97,0.6597938144329897
+base_author,none (original),4021,0.6533200696344194
+base_author,microsoft,80,0.6375
+base_author,facebook,138,0.6304347826086957
+base_author,ResembleAI,30,0.6
+base_author,google,345,0.5884057971014492
+base_author,unsloth,142,0.5070422535211268
+base_author,openai,951,0.2891692954784437
+base_author,deepseek-ai,91,0.10989010989010989

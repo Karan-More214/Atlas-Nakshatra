@@ -13,13 +13,17 @@
 ---
 
 ## 🔑 Results
-> ⚠️ **Placeholder.** Run the pipeline on real Hugging Face data, then replace this section with `reports/findings_draft.md` and the figures in `reports/figures/`.
+Trained on 12,116 eligible Hugging Face models tagged with an Indian language (8,481 train / 1,817 validation / 1,818 test, split chronologically: train ends 2026-01-10, test starts 2026-04-11).
 
-- Final model: _…_ · PR-AUC on the newest models: _…_ (vs _…_ by guessing) · ROC-AUC _…_
-- The top 10% of models by predicted probability are adopted _…_× more often than average.
-- Strongest drivers: _…_
+- **Final model:** LightGBM, calibrated · **PR-AUC 0.87** on the newest 1,818 models (vs. 0.62 for guessing the base rate, 0.66 for a documentation-checklist baseline) · **ROC-AUC 0.80**.
+- The top 10% of models by predicted probability are adopted **1.6× more often** than average (98% vs. 62%).
+- At the chosen threshold: precision 0.75, recall 0.86 (F1 0.80).
+- **Strongest drivers** (by mean |SHAP|): GGUF (locally-runnable) weights, links in the model card, builder type, parameter count, number of files, and the card's text topics.
+
+These are launch-time associations the model found useful for prediction, not proven causes — see [Doing it honestly](#-doing-it-honestly). Adding a link or a GGUF file does not, by itself, guarantee more downloads.
 
 ![What drives adoption](reports/figures/shap_importance.png)
+![Precision-recall on the test set](reports/figures/pr_curve.png)
 
 ## ❓ Problem framing
 - **Unit:** one Hugging Face model tagged with at least one of India's 22 official languages.
@@ -102,9 +106,11 @@ streamlit run app/streamlit_app.py
 
 ## ⚠️ Limitations
 - **One snapshot.** Card, files and license are read at the snapshot date, not at launch, so a card improved after a model became popular looks "launch-time" here. Weekly snapshots (as in Bharat AI Atlas) would fix this.
-- `downloads` counts are global, and include automated and CI downloads. They measure use, not use in India.
+- `downloads` counts are global, and include automated and CI downloads. They measure use, not use in India. This is likely why the base "adoption" rate (62-74% by split) is much higher than Bharat AI Atlas's "ever downloaded" figures: 10 downloads in 30 days is a low bar, and a lot of that traffic is automated.
+- The Hugging Face API no longer accepts `usedStorage` as an `expand` field, so repo-size-on-disk (`log_storage_mb`) cannot currently be collected and is a dead feature (always missing, median-imputed to nothing). Repo size would need to be estimated another way (e.g. per-file sizes from `repo_info`) to be useful again.
 - Builder type is mapped by hand for 215 authors, so most small authors are "Unclassified".
 - Language tags can be wrong (see Bharat AI Atlas), and documentation features overlap, so read SHAP for groups of related features rather than one feature at a time.
+- One author, `mradermacher` (a prolific GGUF-quantization publisher), is the largest single author in both train (9.4%) and test (3.9%) and is adopted almost every time (99% in test). Excluding it from the test set only drops PR-AUC from 0.87 to 0.85, so the model is not just memorizing that one author.
 
 ## 🚀 Next steps
 - **Language tag checker:** detect mislabelled models with language ID on card text.

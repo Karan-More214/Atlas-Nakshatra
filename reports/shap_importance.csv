@@ -1,0 +1,39 @@
+feature,label,mean_abs_shap,direction
+has_gguf,GGUF (local-run) weights,0.6290340691408275,higher -> more adoption
+card_n_links,Links in card,0.6169429466888262,higher -> more adoption
+org_type,Builder type,0.5795219008259755,see categories
+log_params,Model size (parameters),0.44283736667637696,mixed
+n_files,No. of files,0.24127133961608335,mixed
+card_text,Model card wording (topics),0.2131090241654684,text topics
+has_tokenizer,Tokenizer files,0.195449416301662,higher -> more adoption
+n_language_tags,No. of language tags,0.16596237188985888,higher -> more adoption
+card_n_code_blocks,Code examples in card,0.16494811187910952,higher -> more adoption
+library,Library,0.14677899896719218,see categories
+task_group,Task,0.14658719421890534,see categories
+is_gated,Gated access,0.1270009669563613,higher -> less adoption
+card_log_words,Model card length,0.11374034614849098,higher -> more adoption
+base_relation,How it builds on a base model,0.10291471610550845,see categories
+name_len,Name length,0.08441119013717412,higher -> more adoption
+primary_lang,Language,0.04860696903714288,see categories
+has_safetensors,Safetensors weights,0.045715922741854036,higher -> more adoption
+log_author_prior_models,Builder's earlier models,0.0413045617466128,higher -> less adoption
+base_author,Base model provider,0.040465910091021864,see categories
+license_group,License type,0.03869589708375979,see categories
+card_n_datasets,Datasets listed in card,0.030277323002843148,higher -> more adoption
+n_indic_languages,No. of Indian languages,0.026275006939501012,higher -> more adoption
+name_is_throwaway,Test/demo-style name,0.015192970448754412,higher -> less adoption
+card_has_base_model,Base model declared in card,0.014096531375264523,higher -> less adoption
+card_n_headings,Card headings,0.013471130175017413,higher -> less adoption
+sec_usage,Usage section,0.009498004838045748,higher -> more adoption
+sec_citation,Citation section,0.006261116391322156,higher -> more adoption
+has_model_index,Structured eval results (model-index),0.005774773248191134,mixed
+has_onnx,ONNX weights,0.004654323622803588,higher -> less adoption
+card_has_metrics,Metrics listed in card,0.003367845574430725,mixed
+sec_evaluation,Evaluation section,0.0031379190935143797,higher -> less adoption
+is_derivative,Built on another model,0.0015918569193013926,higher -> more adoption
+is_india_dedicated,Dedicated to one Indian language,0.0013852259176155427,higher -> less adoption
+sec_training_data,Training-data section,0.0010707208620992278,higher -> more adoption
+sec_limitations,Limitations/bias section,0.00035755333376938435,higher -> more adoption
+is_indian_builder,Indian builder,0.0003438519193341436,higher -> more adoption
+card_is_template,Unedited template text in card,0.0,mixed
+has_card,Has a model card,0.0,mixed
